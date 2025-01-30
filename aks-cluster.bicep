@@ -1,5 +1,5 @@
 @description('The name of the Managed Cluster resource.')
-param clusterName string = 'myPrivateAKSCluster'
+param clusterName string = 'JenkinsAKS'
 
 @description('The location of the Managed Cluster resource.')
 param location string = resourceGroup().location
@@ -28,7 +28,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
   name: clusterName
   location: location
   identity: {
-    type: 'SystemAssigned'
+    type: 'None'
   }
   properties: {
     dnsPrefix: dnsPrefix

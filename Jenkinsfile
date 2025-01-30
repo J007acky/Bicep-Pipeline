@@ -1,10 +1,5 @@
 pipeline {
     agent any
-
-    environment {
-        
-    }
-
     stages {
         stage('Login to Azure') {
             steps {
@@ -17,14 +12,28 @@ pipeline {
                 }
             }
         }
+        stage('Genereate ssh key') {
+            steps {
+                script {
+                    sh '''
+                        ssh-keygen -t rsa -b 4096
+                    '''
+                }
+            }
+        }
 
         stage('Deploy Bicep Files') {
             steps {
                 script {
                     sh '''
-                        az deployment group create --resource-group <your-resource-group> --template-file <path-to-your-bicep-file>
+                        az deployment group create --resource-group Implementation-Vnet --template-file aks-cluster.bicep --parameters dnsPrefix=rahul-net linuxAdminUsername=rahul sshRSAPublicKey="$(cat testBicepKey.pub)"
                     '''
                 }
+            }
+        }
+        stage('cleanup') {
+            steps {
+                cleanWs()
             }
         }
     }
