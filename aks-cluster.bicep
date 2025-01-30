@@ -2,7 +2,7 @@
 param clusterName string = 'JenkinsAKS'
 
 @description('The location of the Managed Cluster resource.')
-param location string = resourceGroup().location
+param aksLocation string
 
 @description('Optional DNS prefix to use with hosted Kubernetes API server FQDN.')
 param dnsPrefix string
@@ -26,7 +26,7 @@ param vnetSubnetId string
 
 resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
   name: clusterName
-  location: location
+  location: aksLocation
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
