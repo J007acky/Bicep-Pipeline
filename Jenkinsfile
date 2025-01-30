@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        az deployment group create --resource-group Implementation-Vnet --template-file aks-cluster.bicep --parameters dnsPrefix=rahul-net linuxAdminUsername=rahul sshRSAPublicKey="$(cat testBicepKey.pub)"
+                        az deployment group create --resource-group Implementation-Vnet --template-file aks-cluster.bicep --parameters vnetSubnetId="/subscriptions/8c01f775-0496-43bc-a889-65565e670e05/resourceGroups/Implementation-Vnet/providers/Microsoft.Network/virtualNetworks/Spoke/subnets/default" dnsPrefix=rahul-net linuxAdminUsername=rahul sshRSAPublicKey="$(cat testBicepKey.pub)"
                     '''
                 }
             }
