@@ -28,7 +28,10 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
   name: clusterName
   location: location
   identity: {
-    type: 'None'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '/subscriptions/8c01f775-0496-43bc-a889-65565e670e05/resourcegroups/bicep-RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-managed-identity': {}
+    }
   }
   properties: {
     dnsPrefix: dnsPrefix
