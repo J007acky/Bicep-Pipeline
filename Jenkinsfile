@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        ssh-keygen -t rsa -b 4096
+                        ssh-keygen -t rsa -b 4096 -f "$WORKSPACE/testBicepKey" -N
                     '''
                 }
             }
