@@ -37,12 +37,16 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
     dnsPrefix: dnsPrefix
     agentPoolProfiles: [
       {
-        name: 'agentpool'
+        name: 'agentpool-rahul'
         count: agentCount
         vmSize: agentVMSize
         osType: 'Ubuntu'
         mode: 'System'
         vnetSubnetID: vnetSubnetId
+        type: 'VirtualMachineScaleSets'
+        enableAutoScaling: true
+        minCount: 1
+        maxCount: 3
       }
     ]
     aadProfile: {
