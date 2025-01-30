@@ -37,7 +37,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
     dnsPrefix: dnsPrefix
     agentPoolProfiles: [
       {
-        name: 'agentpool-rahul'
+        name: 'deadpool'
         count: agentCount
         vmSize: agentVMSize
         osType: 'Ubuntu'
