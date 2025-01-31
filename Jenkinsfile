@@ -1,5 +1,3 @@
-checkout scm
-def props = readyaml(file: 'variables.yaml')
 pipeline {
     agent any
     // stages {
@@ -50,8 +48,8 @@ pipeline {
     stages {
         stage('test') {
             steps {
-               
-                echo "Properties: ${props}"
+                def config = readYaml file: 'variables.yml'
+                echo "Properties: ${config}"
             }
         }
     }
