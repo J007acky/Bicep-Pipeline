@@ -48,8 +48,10 @@ pipeline {
     stages {
         stage('test') {
             steps {
-                def config = readYaml file: 'variables.yml'
-                echo "Properties: ${config}"
+                script {
+                    def config = readYaml file: 'variables.yml'
+                    echo "Properties: ${config}"
+                }
             }
         }
     }
