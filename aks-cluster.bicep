@@ -46,7 +46,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
         name: 'deadpool'
         count: agentCount
         vmSize: agentVMSize
-        osType: 'Ubuntu'
+        osType: 'Linux'
         mode: 'System'
         vnetSubnetID: vnetSubnetId
         type: 'VirtualMachineScaleSets'
