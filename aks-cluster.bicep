@@ -30,11 +30,17 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '/subscriptions/8c01f775-0496-43bc-a889-65565e670e05/resourcegroups/bicep-RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-managed-identity': {}
+      '/subscriptions/8c01f775-0496-43bc-a889-65565e670e05/resourceGroups/bicep-RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-managed-identity': {}
     }
   }
   properties: {
-    dnsPrefix: dnsPrefix
+    identityProfile:{
+      kubeletidentity:{
+        clientId: '0d9b009c-8e25-472c-bd53-da54bd17fdc5'
+        objectId: 'bd520115-087c-46c4-907b-b1471488b778'
+        resourceId: resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'kubelet-managed-identity')
+      }
+    }
     agentPoolProfiles: [
       {
         name: 'deadpool'
@@ -72,11 +78,9 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
         ]
       }
     }
-    addonProfiles: {
-      httpApplicationRouting: {
-        enabled: true
-      }
-    }
+    dnsPrefix: dnsPrefix
+    ingressProfile: {
+      webAppRouting: {enabled: true}}
   }
 }
 
