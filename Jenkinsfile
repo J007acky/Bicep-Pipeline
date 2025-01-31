@@ -57,6 +57,7 @@ pipeline {
         stage('test2') {
             steps {
                 script {
+                    def config = readYaml file: 'variables.yml'
                     echo "Name: ${config.name}"
                     echo "Age: ${config.age}"
                     echo "Env: ${config.env}"
