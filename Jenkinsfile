@@ -54,5 +54,14 @@ pipeline {
                 }
             }
         }
+        stage('test2') {
+            steps {
+                script {
+                    echo "Name: ${config.name}"
+                    echo "Age: ${config.age}"
+                    echo "Env: ${config.env}"
+                }
+            }
+        }
     }
 }
