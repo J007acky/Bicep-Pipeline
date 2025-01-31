@@ -27,7 +27,7 @@ pipeline {
                 script {
                     def config = readYaml file: 'variables.yml'
                     sh '''
-                        az deployment group create --resource-group "${config.rgName}" --template-file aks-cluster.bicep --parameters vnetSubnetId="${config.subnetId}" dnsPrefix="${config.dnsPrefix}" linuxAdminUsername="${config.usrName}" sshRSAPublicKey="$(cat testBicepKey.pub)" aksLocation="${config.location}"
+                        az deployment group create --resource-group ${config.rgName} --template-file aks-cluster.bicep --parameters vnetSubnetId=${config.subnetId} dnsPrefix=${config.dnsPrefix} linuxAdminUsername=${config.usrName} sshRSAPublicKey="$(cat testBicepKey.pub)" aksLocation=${config.location}
                     '''
                 }
             }
