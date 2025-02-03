@@ -12,15 +12,15 @@ pipeline {
                 }
             }
         }
-        stage('Genereate ssh key') {
-            steps {
-                script {
-                    sh '''
-                        ssh-keygen -t rsa -b 4096 -f "$WORKSPACE/testBicepKey" -N 'yoyo'
-                    '''
-                }
-            }
-        }
+        // stage('Genereate ssh key') {
+        //     steps {
+        //         script {
+        //             sh '''
+        //                 ssh-keygen -t rsa -b 4096 -f "$WORKSPACE/testBicepKey" -N 'yoyo'
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Deploy Resource Groups') {
             steps {
                 script {
