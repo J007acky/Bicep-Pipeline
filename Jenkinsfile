@@ -29,9 +29,8 @@ pipeline {
                     sh """
                         az deployment group create\
                          --resource-group ${config.rgName} \
-                         --template-file aks-cluster.bicep \
-                         --parameters \
-                         sshRSAPublicKey="\$(cat testBicepKey.pub)"
+                         --parameters 'aks-cluster.bicepparam'\
+                         --parameters sshRSAPublicKey="\$(cat testBicepKey.pub)"
                     """
                 }
             }
