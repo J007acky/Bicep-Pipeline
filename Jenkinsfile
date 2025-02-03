@@ -64,7 +64,7 @@ pipeline {
                     def config = readYaml file: 'variables.yml'
                     sh """
                         az deployment group create\
-                         --resource-group '${config.rgName}-' \
+                         --resource-group '${config.rgName}-aks' \
                          --parameters 'aks-cluster.bicepparam'\
                          --parameters sshRSAPublicKey="\$(cat testBicepKey.pub)"
                     """
