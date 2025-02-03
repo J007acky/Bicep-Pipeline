@@ -21,6 +21,7 @@ resource aksClusterUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2
   properties: {
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', '4abbcc35-e782-43d8-92c5-2d3f1bd2253f')
     principalId: AksManagedIdentity.properties.principalId
+    principalType: 'ServicePrincipal'
   }
 }
 
@@ -33,6 +34,7 @@ resource networkContributorRoleAssignment 'Microsoft.Authorization/roleAssignmen
   properties: {
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', '4d97b98b-1d4f-4787-a291-c67834d212e7')
     principalId: AksManagedIdentity.properties.principalId
+    principalType: 'ServicePrincipal'
   }
 }
 
@@ -45,6 +47,7 @@ resource identityOperatorRoleAssignment 'Microsoft.Authorization/roleAssignments
   properties: {
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', 'f1a07417-d97a-45cb-824c-7a7467783830')
     principalId: AksManagedIdentity.properties.principalId
+    principalType: 'ServicePrincipal'
   }
 }
 
