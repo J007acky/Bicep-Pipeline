@@ -1,3 +1,6 @@
+@description('Resource Group name prefix')
+param rgNamePrefix string
+
 @description('The name of the Managed Cluster resource.')
 param clusterName string
 
@@ -31,10 +34,12 @@ param aksManagedIdentityId string
 param kubeletManagedIdentityId string
 
 resource aksManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
+  scope: resourceGroup('${rgNamePrefix}-identity')
   name: aksManagedIdentityId
 }
 
 resource kubeletManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
+  scope: resourceGroup('${rgNamePrefix}-identity')
   name: kubeletManagedIdentityId
 }
 

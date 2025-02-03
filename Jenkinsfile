@@ -66,7 +66,8 @@ pipeline {
                         az deployment group create\
                          --resource-group '${config.rgName}-aks' \
                          --parameters 'aks-cluster.bicepparam'\
-                         --parameters sshRSAPublicKey="\$(cat testBicepKey.pub)"
+                         --parameters sshRSAPublicKey="\$(cat testBicepKey.pub)" \
+                         rgNamePrefix='${config.rgName}'
                     """
                 }
             }
