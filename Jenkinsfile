@@ -50,7 +50,7 @@ pipeline {
                 script {
                     def config = readYaml file: 'variables.yml'
                     sh """
-                        az deployment group create --resource-group '${config.rgName}-aks' \
+                        az deployment group create --resource-group '${config.rgName}-identity' \
                         --template-file managed-identity.bicep \
                         --name identity-deployment
                     """
