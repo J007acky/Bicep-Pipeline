@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        az deployment sub create --location CentralUS --parametes 'resource-group.bicepparam' --name bicep-rg-deployment
+                        az deployment sub create --location CentralUS --parameters 'resource-group.bicepparam' --name bicep-rg-deployment
                     '''
                 }
             }
