@@ -8,4 +8,5 @@ param clusterName = 'JenkinsAKS'
 param agentCount = 2
 param agentVMSize = 'Standard_DS2_v2'
 param linuxAdminUsername = 'rahul'
-
+param aksManagedIdentityId = 'aks-managed-identity'
+param kubeletManagedIdentityId = 'kubelet-managed-identity'

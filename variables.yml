@@ -1,5 +1,2 @@
-rgName: bicep-RG
-subnetId: /subscriptions/8c01f775-0496-43bc-a889-65565e670e05/resourceGroups/Implementation-Vnet/providers/Microsoft.Network/virtualNetworks/Spoke/subnets/default
-dnsPrefix: rahul-net
-usrName: rahul
+
 location: CentralUS

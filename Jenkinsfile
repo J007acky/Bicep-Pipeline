@@ -21,14 +21,39 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Managed Identity') {
+        stage('Deploy Resource Groups') {
             steps {
                 script {
                     sh '''
-                        az deployment group create --resource-group bicep-RG \
+                        az deployment sub create --location CentralUS --parametes 'resource-group.bicepparam' --name bicep-rg-deployment
+                    '''
+                }
+            }
+        }
+        stage('Deploy Virtual Machine') {
+            steps {
+                script {
+                    def config = readYaml file: 'variables.yml'
+                    sh """
+                        az deployment group create \
+                        --resource-group '${config.rgName}-vm' \
+                        --template-file test-vm.bicep \
+                        --parameters vmUsername=Rahul \
+                        vmPassword='Rahul@123'
+
+                    """
+                }
+            }
+        }
+        stage('Deploy Managed Identity') {
+            steps {
+                script {
+                    def config = readYaml file: 'variables.yml'
+                    sh """
+                        az deployment group create --resource-group '${config.rgName}-aks' \
                         --template-file managed-identity.bicep \
                         --name identity-deployment
-                    '''
+                    """
                 }
             }
         }
@@ -39,7 +64,7 @@ pipeline {
                     def config = readYaml file: 'variables.yml'
                     sh """
                         az deployment group create\
-                         --resource-group ${config.rgName} \
+                         --resource-group '${config.rgName}-' \
                          --parameters 'aks-cluster.bicepparam'\
                          --parameters sshRSAPublicKey="\$(cat testBicepKey.pub)"
                     """

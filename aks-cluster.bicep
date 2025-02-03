@@ -24,21 +24,35 @@ param sshRSAPublicKey string
 @description('The ID of the subnet within the VNet where the AKS cluster will be deployed.')
 param vnetSubnetId string
 
+@description('Id for the user assigned identity for the kubelet.')
+param aksManagedIdentityId string
+
+@description('Id for the user assigned identity for the kubelet.')
+param kubeletManagedIdentityId string
+
+resource aksManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
+  name: aksManagedIdentityId
+}
+
+resource kubeletManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
+  name: kubeletManagedIdentityId
+}
+
 resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
   name: clusterName
   location: aksLocation
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '/subscriptions/8c01f775-0496-43bc-a889-65565e670e05/resourceGroups/bicep-RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-managed-identity': {}
+      '${aksManagedIdentity.id}':{}
     }
   }
   properties: {
     identityProfile:{
       kubeletidentity:{
-        clientId: '0d9b009c-8e25-472c-bd53-da54bd17fdc5'
-        objectId: 'bd520115-087c-46c4-907b-b1471488b778'
-        resourceId: resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'kubelet-managed-identity')
+        clientId: kubeletManagedIdentity.properties.clientId
+        objectId: kubeletManagedIdentity.properties.principalId
+        resourceId: kubeletManagedIdentity.id
       }
     }
     agentPoolProfiles: [
