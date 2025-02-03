@@ -21,6 +21,17 @@ pipeline {
                 }
             }
         }
+        stage('Deploy Managed Identity') {
+            steps {
+                script {
+                    sh '''
+                        az deployment group create --resource-group bicep-RG \
+                        --template-file managed-identity.bicep \
+                        --name identity-deployment
+                    '''
+                }
+            }
+        }
 
         stage('Deploy Bicep Files') {
             steps {
