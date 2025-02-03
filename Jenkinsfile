@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                     def config = readYaml file: 'variables.yml'
-                    withCredentials([sshUserPrivateKey(credentialsId: 'VM-SSH-KEY', keyFileVariable: 'SSH_KEY', passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USER')]) {
+                    withCredentials([string(credentialsId: 'SSH_KEY_NODE', variable: 'SSH_KEY')]) {
                         sh """
                         az deployment group create\
                          --resource-group '${config.rgName}-aks' \
