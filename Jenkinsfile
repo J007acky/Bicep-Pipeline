@@ -62,13 +62,15 @@ pipeline {
             steps {
                 script {
                     def config = readYaml file: 'variables.yml'
-                    sh """
+                    withCredentials([sshUserPrivateKey(credentialsId: 'VM-SSH-KEY', keyFileVariable: 'SSH_KEY', passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USER')]) {
+                        sh """
                         az deployment group create\
                          --resource-group '${config.rgName}-aks' \
                          --parameters 'aks-cluster.bicepparam'\
-                         --parameters sshRSAPublicKey="\$(cat testBicepKey.pub)" \
+                         --parameters sshRSAPublicKey='${SSH_KEY}' \
                          rgNamePrefix='${config.rgName}'
                     """
+                    }
                 }
             }
         }
