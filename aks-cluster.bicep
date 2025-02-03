@@ -1,5 +1,5 @@
 @description('The name of the Managed Cluster resource.')
-param clusterName string = 'JenkinsAKS'
+param clusterName string
 
 @description('The location of the Managed Cluster resource.')
 param aksLocation string
@@ -9,14 +9,14 @@ param dnsPrefix string
 
 @description('The number of nodes for the cluster.')
 @minValue(1)
-@maxValue(10) // Free tier supports up to 10 nodes
-param agentCount int = 2
+@maxValue(10)
+param agentCount int
 
 @description('The size of the Virtual Machine for agent nodes.')
-param agentVMSize string = 'Standard_DS2_v2' // Adjust based on your requirements
+param agentVMSize string
 
 @description('User name for the Linux Virtual Machines.')
-param linuxAdminUsername string = 'rahul'
+param linuxAdminUsername string
 
 @description('Configure all linux machines with the SSH RSA public key string.')
 param sshRSAPublicKey string
