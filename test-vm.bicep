@@ -90,7 +90,13 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2020-11-01' = {
   }
 }
 
-
+resource vmSSH 'Microsoft.Compute/sshPublicKeys@2024-07-01' = {
+  location: vmLocation
+  name: '${vmName}-sshKey'
+  properties: {
+    publicKey: sshKeyVM
+  }
+}
 
 resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
   name: vmName
@@ -106,9 +112,7 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
       linuxConfiguration: {
         ssh:{
           publicKeys: [
-            {
-              keyData: sshKeyVM
-            }
+            vmSSH
           ]
         }
       }
