@@ -90,14 +90,6 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2020-11-01' = {
   }
 }
 
-resource vmSSH 'Microsoft.Compute/sshPublicKeys@2024-07-01' = {
-  location: vmLocation
-  name: '${vmName}-sshKey'
-  properties: {
-    publicKey: sshKeyVM
-  }
-}
-
 resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
   name: vmName
   location: vmLocation
@@ -110,9 +102,13 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
       adminUsername: vmUsername
       adminPassword: vmPassword
       linuxConfiguration: {
+        disablePasswordAuthentication: true
         ssh:{
           publicKeys: [
-            vmSSH
+            {
+              path: '/home/${vmUsername}/.ssh/authorized_keys'
+              keyData: sshKeyVM
+            }
           ]
         }
       }
@@ -145,6 +141,5 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
   dependsOn:[
     networkInterface
     networkSecurityGroup
-    vmSSH
   ]
 }
