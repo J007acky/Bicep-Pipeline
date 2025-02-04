@@ -1,17 +1,16 @@
 @description('Managed Identity for AKS control plane to interact with other Azure resources.')
 resource AksManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: 'aks-managed-identity'
-  location: 'CentralUS'
+  location: 'EastUS'
 }
 
 @description('Managed Identity for Kubelet (Node Pool) to pull images and access Azure resources.')
 resource KubeletManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: 'kubelet-managed-identity'
-  location: 'CentralUS'
+  location: 'EastUS'
 }
 
 // 🔹 AKS Managed Identity Role Assignments
-
 @description('Assigns Azure Kubernetes Service Cluster User role to the AKS Managed Identity.')
 resource aksClusterUserRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
   dependsOn: [
@@ -52,6 +51,5 @@ resource identityOperatorRoleAssignment 'Microsoft.Authorization/roleAssignments
 }
 
 // 🔹 Kubelet Managed Identity Role Assignments
-
 // ACR Pull Role
 // Azure Key Vault Secrets Role

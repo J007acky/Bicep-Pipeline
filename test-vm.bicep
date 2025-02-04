@@ -1,21 +1,21 @@
 @description('Name of the Virtual Machine')
-param vmName string = 'testing-VM'
+param vmName string
 
 @description('Location of the Virtual Machine')
-param vmLocation string = 'CentralUS'
+param vmLocation string
 
 @description('Name for the NIC')
-param nicName string = '${vmName}-NIC'
+var nicName = '${vmName}-NIC'
 
 @description('Name for the NSG')
-param nsgName string = '${nicName}-NSG'
+var nsgName = '${nicName}-NSG'
 
 @description('Name for the public IP')
-param ipName string = '${vmName}-IP'
+var ipName = '${vmName}-IP'
 
 
 @description('Subnet ID for the Virtual Machine')
-param subnetId string = '/subscriptions/8c01f775-0496-43bc-a889-65565e670e05/resourceGroups/Implementation-Vnet/providers/Microsoft.Network/virtualNetworks/Spoke/subnets/default'
+param subnetId string
 
 @description('Username for accessing VM')
 @secure()
@@ -28,6 +28,10 @@ param vmPassword string
 @description('SSH Key for accessing VM')
 @secure()
 param sshKeyVM string
+
+
+@description('This is the Custom Data that will execute on the VM')
+var customData = loadFileAsBase64('customdata.txt')
 
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' = {
@@ -98,6 +102,7 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
       vmSize: 'Standard_B1s'
     }
     osProfile: {
+      customData: customData
       computerName: '${vmName}-OS'
       adminUsername: vmUsername
       adminPassword: vmPassword

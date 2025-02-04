@@ -81,8 +81,8 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
     networkProfile: {
       networkPlugin: 'azure'
       loadBalancerSku: 'standard'
-      serviceCidr: '10.1.0.0/16'
-      dnsServiceIP: '10.1.0.10'
+      serviceCidr: '30.1.0.0/18'
+      dnsServiceIP: '30.1.2.10'
     }
     apiServerAccessProfile: {
       enablePrivateCluster: true // Enable private cluster
@@ -98,8 +98,8 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
       }
     }
     dnsPrefix: dnsPrefix
-    ingressProfile: {
-      webAppRouting: {enabled: true}}
+    // ingressProfile: {
+    //   webAppRouting: {enabled: true}}
   }
 }
 

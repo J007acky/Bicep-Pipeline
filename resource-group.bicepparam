@@ -1,4 +1,7 @@
 using 'resource-group.bicep'
 
+// Prefix for the resource group names
 param rgName = 'bicep-rg'
-param rgLocation = 'CentralUS'
+
+// Location for the resource group
+param rgLocation = 'EastUS'
