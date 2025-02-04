@@ -1,0 +1,8 @@
+var sshKeyVM = 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCv6F313Nelcc15Ocpc6L6owHMbnLBWSoZ22hTxqwvzooF/bnTpKuKXkfbs9UYBtZMpDE/m5xUqSCPDiUMxMA1AvEoXm7qM9HKeGD69uFEfm2sgu8EmQ11ITEWHqypmhSokCYR0NtKjlf7oK5M3vtchRyhxWjd6GGcQMohGdQjNPEkDtsKc9YIX7EO7rJ3FsTHwSYdAzRtgqrlK+ULzsCKSkBgEtV1C/bw9Uo/688NcDlPP1dQaHhGlXAAsK4uBNNUVY+RSS0o4Ob2Z7++YQtGXegoh/nV6Zb0lyainv1VTdBpu1asUV1nQHILNWBjy6R6H7MIWWmy7N6H8hpdHWIhqWCg3vLpRagEWUx7e6aUQJE/m6cF0GaFdx79b9wesPw9viynZrh0J99HOQs8aV6RsSOkqFJ/Rn8Gj7Dx2VcXFyiE60PchUG19ssRTl+QFLNcgiH6dmqx7Y7MRAsqCb9m0BCidDzG4VNyNwOR8uwjROAM4WwCVPFLqFe4g+dbJZuTFLQ0iMQybL8wNDofMSCOPlhdVxbaZoc+yqyPCVunpZ3nGu2YRKa0OD0lIELinF1/L2d9MlSpkPb6U12Lq5DOpPsg4vXPc8AIY8QG+3JJ5zD08u1NPJlHM1nvi7BmmTTEtPnsUkFQtyojta0Y2qPxXO88pYCzW2dXVb1DcLlQmKw== rahul_sr@LAP-55342'
+resource vmSSH 'Microsoft.Compute/sshPublicKeys@2024-07-01' = {
+  location: 'CentralUS'
+  name: 'temp-sshKey'
+  properties: {
+    publicKey: sshKeyVM
+  }
+}
