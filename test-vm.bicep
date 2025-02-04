@@ -25,6 +25,10 @@ param vmUsername string
 @secure()
 param vmPassword string
 
+@description('SSH Key for accessing VM')
+@secure()
+param sshKeyVM string
+
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' = {
   name: nsgName
@@ -99,6 +103,15 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
       computerName: '${vmName}-OS'
       adminUsername: vmUsername
       adminPassword: vmPassword
+      linuxConfiguration: {
+        ssh:{
+          publicKeys: [
+            {
+              keyData: sshKeyVM
+            }
+          ]
+        }
+      }
     }
     storageProfile: {
       imageReference: {
@@ -106,6 +119,7 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
         offer: 'UbuntuServer'
         sku: '16.04-LTS'
         version: 'latest'
+     
       }
       osDisk: {
         name: '${vmName}-osdisk'

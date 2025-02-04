@@ -34,14 +34,17 @@ pipeline {
             steps {
                 script {
                     def config = readYaml file: 'variables.yml'
-                    sh """
+                    withCredentials([string(credentialsId: 'SSH_KEY_NODE', variable: 'SSH_KEY')]) {
+                        sh """
                         az deployment group create \
                         --resource-group '${config.rgName}-vm' \
                         --template-file test-vm.bicep \
                         --parameters vmUsername=Rahul \
-                        vmPassword='Rahul@123'
+                        vmPassword='Rahul@123' \
+                        sshKeyVM='${SSH_KEY}'
 
                     """
+                    }
                 }
             }
         }
