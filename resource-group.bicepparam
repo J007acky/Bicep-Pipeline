@@ -4,4 +4,4 @@ using 'resource-group.bicep'
 param rgName = 'bicep-rg'
 
 // Location for the resource group
-param rgLocation = 'EastUS'
+param rgLocation = 'WestUS'
