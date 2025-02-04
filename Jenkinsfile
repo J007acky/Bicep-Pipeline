@@ -38,7 +38,7 @@ pipeline {
                         sh """
                         az deployment group create \
                         --resource-group '${config.rgName}-vm' \
-                        --template-file test-vm.bicep \
+                        --parameters test-vm.bicepparam \
                         --parameters vmUsername=Rahul \
                         vmPassword='Rahul@123' \
                         sshKeyVM='${SSH_KEY}'
