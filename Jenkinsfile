@@ -24,9 +24,10 @@ pipeline {
         stage('Deploy Resource Groups') {
             steps {
                 script {
-                    sh '''
-                        az deployment sub create --location CentralUS --parameters 'resource-group.bicepparam' --name bicep-rg-deployment
-                    '''
+                    def config = readYaml file: 'variables.yml'
+                    sh """
+                        az deployment sub create --location '${config.location}' --parameters 'resource-group.bicepparam' --name bicep-rg-deployment
+                    """
                 }
             }
         }
