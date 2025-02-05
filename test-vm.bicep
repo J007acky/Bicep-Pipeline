@@ -17,7 +17,7 @@ var nsgName = '${nicName}-NSG'
 var ipName = '${vmName}-IP'
 
 @description('Subnet ID where the Virtual Machine will be deployed')
-var subnetId = resourceId('${rgNamePrefix}-resource-rg', 'Microsoft.Network/virtualNetworks/subnets', '${rgNamePrefix}-resource-vnet', '${rgNamePrefix}-resource-vnet-private-subnet')
+var subnetId = resourceId('${rgNamePrefix}-shared-rg', 'Microsoft.Network/virtualNetworks/subnets', '${rgNamePrefix}-shared-vnet', '${rgNamePrefix}-shared-vnet-public-subnet')
 
 @description('Username for accessing VM')
 @secure()

@@ -7,3 +7,7 @@ param rgName = '${configFile.subscription}-${configFile.location}-${configFile.e
 
 // Location for the resource group
 param rgLocation = configFile.location
+
+param vmRGName = '${configFile.subscription}-${configFile.locationShared}-${configFile.environment}'
+
+param sharedLocation = configFile.locationShared

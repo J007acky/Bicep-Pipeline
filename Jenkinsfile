@@ -38,7 +38,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'SSH_KEY_NODE', variable: 'SSH_KEY')]) {
                         sh """
                         az deployment group create \
-                        --resource-group '${config.subscription}-${config.location}-${config.environment}-vm-rg' \
+                        --resource-group '${config.subscription}-${config.locationShared}-${config.environment}-vm-rg' \
                         --parameters test-vm.bicepparam \
                         --parameters vmUsername=Rahul \
                         vmPassword='Rahul@123' \
@@ -55,7 +55,7 @@ pipeline {
                     def config = readYaml file: 'config.yml'
                     sh """
                         az deployment group create --resource-group '${config.subscription}-${config.location}-${config.environment}-identity-rg' \
-                        --template-file managed-identity.bicep \
+                        --parameters managed-identity.bicepparam \
                         --name identity-deployment
                     """
                 }

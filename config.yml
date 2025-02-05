@@ -2,3 +2,4 @@ rgName: bicep-rg
 location: westus
 subscription: azure-for-students
 environment: dev
+locationShared: eastus
