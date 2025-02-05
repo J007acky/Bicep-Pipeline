@@ -65,7 +65,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
     }
     agentPoolProfiles: [
       {
-        name: '${clusterName}-agentpool'
+        name: 'deadpool'
         count: agentCount
         vmSize: agentVMSize
         osType: 'Linux'
