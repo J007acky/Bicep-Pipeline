@@ -1,4 +1,4 @@
 rgName: bicep-rg
-location: WestUS
+location: westus
 subscription: azure-for-students
 environment: dev
