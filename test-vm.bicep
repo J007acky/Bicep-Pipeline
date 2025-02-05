@@ -1,8 +1,11 @@
-@description('Name of the Virtual Machine')
-param vmName string
+@description('Resource Group Name Prefix')
+param rgNamePrefix string 
 
 @description('Location of the Virtual Machine')
 param vmLocation string
+
+@description('Name of the Virtual Machine')
+var vmName = '${rgNamePrefix}-resource-vm'
 
 @description('Name for the NIC')
 var nicName = '${vmName}-NIC'
@@ -13,9 +16,8 @@ var nsgName = '${nicName}-NSG'
 @description('Name for the public IP')
 var ipName = '${vmName}-IP'
 
-
-@description('Subnet ID for the Virtual Machine')
-param subnetId string
+@description('Subnet ID where the Virtual Machine will be deployed')
+var subnetId = resourceId('${rgNamePrefix}-resource-rg', 'Microsoft.Network/virtualNetworks/subnets', '${rgNamePrefix}-resource-vnet', '${rgNamePrefix}-resource-vnet-private-subnet')
 
 @description('Username for accessing VM')
 @secure()
@@ -68,6 +70,9 @@ resource publicIP 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
   }
+  dependsOn: [
+    networkSecurityGroup
+  ]
 }
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2020-11-01' = {
@@ -92,10 +97,10 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2020-11-01' = {
       id: networkSecurityGroup.id
     }
   }
-  dependsOn: [
-    publicIP
-    networkSecurityGroup
-  ]
+  // dependsOn: [
+  //   publicIP
+  //   networkSecurityGroup
+  // ]
 }
 
 resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
@@ -147,7 +152,7 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
       ]
     }
   }
-  dependsOn:[
-    networkInterface
-  ]
+  // dependsOn:[
+  //   networkInterface
+  // ]
 }

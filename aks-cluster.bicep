@@ -1,8 +1,6 @@
 @description('Resource Group name prefix')
 param rgNamePrefix string
 
-@description('The name of the Managed Cluster resource.')
-param clusterName string
 
 @description('The location of the Managed Cluster resource.')
 param aksLocation string
@@ -24,22 +22,27 @@ param linuxAdminUsername string
 @description('Configure all linux machines with the SSH RSA public key string.')
 param sshRSAPublicKey string
 
-@description('The ID of the subnet within the VNet where the AKS cluster will be deployed.')
-param vnetSubnetId string
+@description('IP address range for the Kubernetes service address range.')
+param serviceCidr string
 
-@description('Id for the user assigned identity for the kubelet.')
-param aksManagedIdentityId string
+@description('IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns).')
+param dnsServiceIP string
 
-@description('Id for the user assigned identity for the kubelet.')
-param kubeletManagedIdentityId string
+var clusterName = '${rgNamePrefix}-resource-aks'
+
+var vnetSubnetId = resourceId('${rgNamePrefix}-resource-rg', 'Microsoft.Network/virtualNetworks/subnets', '${rgNamePrefix}-resource-vnet', '${rgNamePrefix}-resource-vnet-private-subnet')
+
+var aksManagedIdentityId = '${rgNamePrefix}-identity-aks-managed-identity'
+
+var kubeletManagedIdentityId = '${rgNamePrefix}-identity-kubelet-managed-identity'
 
 resource aksManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
-  scope: resourceGroup('${rgNamePrefix}-identity')
+  scope: resourceGroup('${rgNamePrefix}-identity-rg')
   name: aksManagedIdentityId
 }
 
 resource kubeletManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
-  scope: resourceGroup('${rgNamePrefix}-identity')
+  scope: resourceGroup('${rgNamePrefix}-identity-rg')
   name: kubeletManagedIdentityId
 }
 
@@ -62,7 +65,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
     }
     agentPoolProfiles: [
       {
-        name: 'deadpool'
+        name: '${clusterName}-agentpool'
         count: agentCount
         vmSize: agentVMSize
         osType: 'Linux'
@@ -81,8 +84,8 @@ resource aks 'Microsoft.ContainerService/managedClusters@2024-02-01' = {
     networkProfile: {
       networkPlugin: 'azure'
       loadBalancerSku: 'standard'
-      serviceCidr: '30.1.0.0/18'
-      dnsServiceIP: '30.1.2.10'
+      serviceCidr: serviceCidr
+      dnsServiceIP: dnsServiceIP
     }
     apiServerAccessProfile: {
       enablePrivateCluster: true // Enable private cluster

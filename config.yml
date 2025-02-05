@@ -1,0 +1,4 @@
+rgName: bicep-rg
+location: WestUS
+subscription: azure-for-students
+environment: dev
