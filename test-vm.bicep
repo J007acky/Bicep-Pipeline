@@ -92,6 +92,10 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2020-11-01' = {
       id: networkSecurityGroup.id
     }
   }
+  dependsOn: [
+    publicIP
+    networkSecurityGroup
+  ]
 }
 
 resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
@@ -145,6 +149,5 @@ resource ubuntuVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
   }
   dependsOn:[
     networkInterface
-    networkSecurityGroup
   ]
 }
