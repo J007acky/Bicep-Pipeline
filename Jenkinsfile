@@ -24,7 +24,7 @@ pipeline {
         stage('Deploy Resource Groups') {
             steps {
                 script {
-                    def config = readYaml file: 'variables.yml'
+                    def config = readYaml file: 'config.yml'
                     sh """
                         az deployment sub create --location '${config.location}' --parameters 'resource-group.bicepparam' --name bicep-rg-deployment
                     """
@@ -34,11 +34,11 @@ pipeline {
         stage('Deploy Virtual Machine') {
             steps {
                 script {
-                    def config = readYaml file: 'variables.yml'
+                    def config = readYaml file: 'config.yml'
                     withCredentials([string(credentialsId: 'SSH_KEY_NODE', variable: 'SSH_KEY')]) {
                         sh """
                         az deployment group create \
-                        --resource-group '${config.rgName}-vm' \
+                        --resource-group '${config.subscription}-${config.location}-${config.environment}-vm-rg' \
                         --parameters test-vm.bicepparam \
                         --parameters vmUsername=Rahul \
                         vmPassword='Rahul@123' \
@@ -54,7 +54,7 @@ pipeline {
                 script {
                     def config = readYaml file: 'variables.yml'
                     sh """
-                        az deployment group create --resource-group '${config.rgName}-identity' \
+                        az deployment group create --resource-group '${config.subscription}-${config.location}-${config.environment}-identity-rg' \
                         --template-file managed-identity.bicep \
                         --name identity-deployment
                     """
@@ -65,14 +65,13 @@ pipeline {
         stage('Deploy Bicep Files') {
             steps {
                 script {
-                    def config = readYaml file: 'variables.yml'
+                    def config = readYaml file: 'config.yml'
                     withCredentials([string(credentialsId: 'SSH_KEY_NODE', variable: 'SSH_KEY')]) {
                         sh """
                         az deployment group create\
-                         --resource-group '${config.rgName}-aks' \
+                         --resource-group '${config.subscription}-${config.location}-${config.environment}-aks-rg' \
                          --parameters 'aks-cluster.bicepparam'\
-                         --parameters sshRSAPublicKey='${SSH_KEY}' \
-                         rgNamePrefix='${config.rgName}'
+                         --parameters sshRSAPublicKey='${SSH_KEY}'
                     """
                     }
                 }
