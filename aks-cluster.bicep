@@ -28,7 +28,7 @@ param serviceCidr string
 @description('IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns).')
 param dnsServiceIP string
 
-var clusterName = '${rgNamePrefix}-resource-aks'
+var clusterName = '${rgNamePrefix}-aks'
 
 var vnetSubnetId = resourceId('${rgNamePrefix}-resource-rg', 'Microsoft.Network/virtualNetworks/subnets', '${rgNamePrefix}-resource-vnet', '${rgNamePrefix}-resource-vnet-private-subnet')
 
