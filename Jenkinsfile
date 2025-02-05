@@ -52,7 +52,7 @@ pipeline {
         stage('Deploy Managed Identity') {
             steps {
                 script {
-                    def config = readYaml file: 'variables.yml'
+                    def config = readYaml file: 'config.yml'
                     sh """
                         az deployment group create --resource-group '${config.subscription}-${config.location}-${config.environment}-identity-rg' \
                         --template-file managed-identity.bicep \
